@@ -13,6 +13,7 @@ const App = () => {
   const len = anecdotes.length
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(Array(len).fill(0))
+  let highest = 0;
 
   const handleRand = () => {
     const newValue = Math.floor(Math.random()*(len))
@@ -25,11 +26,19 @@ const App = () => {
     setPoints(copy)
   }
 
+  for (let i=0; i<len; i++) {
+    if (points[i] > points[highest]) {
+      highest = i
+    }
+  }
   return (
     <div>
+      <h1>Anecdotes of the day</h1>
       <p>{anecdotes[selected]}<br />has {points[selected]} votes</p>
       <button onClick={handleRand}>next anecdote</button>
       <button onClick={handleVote}>Vote anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[highest]}<br /> has {points[highest]} votes</p>
     </div>
   )
 }
